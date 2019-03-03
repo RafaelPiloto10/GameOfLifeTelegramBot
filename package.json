@@ -1,0 +1,32 @@
+{
+    "name": "gameoflifetelegrambot",
+    "version": "1.0.0",
+    "description": "A telegram bot that manages the game of life chat",
+    "main": "Bot.js",
+    "scripts": {
+        "test": "echo \"Error: no test specified\" && exit 1",
+        "start": "node Bot.js",
+        "dev": "nodemon Bot.js"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/RafaelPiloto10/GameOfLifeTelegramBot.git"
+    },
+    "keywords": [
+        "Game",
+        "of",
+        "Life",
+        "telegram",
+        "bot"
+    ],
+    "author": "Rafael Piloto (rafaelpiloto10.now.sh)",
+    "license": "MIT",
+    "bugs": {
+        "url": "https://github.com/RafaelPiloto10/GameOfLifeTelegramBot/issues"
+    },
+    "homepage": "https://github.com/RafaelPiloto10/GameOfLifeTelegramBot#readme",
+    "dependencies": {
+        "micro-bot": "^2.5.3",
+        "telegraf": "^3.27.1"
+    }
+}
