@@ -39,7 +39,6 @@ const Tools = require('./scripts/Tools');
 
 Bot.start((chat) => {
     chat.reply("I have been summoned! Welcome to the game of life!");
-    console.log(Object.getOwnPropertyNames(chat));
 });
 
 Bot.help((chat) => {
@@ -49,7 +48,7 @@ Bot.help((chat) => {
 Bot.use((chat, next) => {
     if (chat.updateType === 'message') {
         const text = chat.update.message.text;
-        if (text.startsWith('/')) {
+        if (text && text.startsWith('/')) {
             const match = text.match(/^\/([^\s]+)\s?(.+)?/)
             let args = []
             let command
@@ -85,7 +84,7 @@ Bot.command("register", (chat, next) => {
                 let user = new UserModel({ name, username, telegram_id: id, date: new Date() });
                 console.log(user);
                 user.save();
-                chat.reply(`Welcome to the Game of Life ${username}!\nPlease view the rules here: https://docs.google.com/document/d/12k3VVW8UV8PKqWrqNJvhm5cdfOkxQigmqgcQ8gDdmXc`);
+                chat.reply(`Welcome to the Game of Life ${username}!\nPlease view the rules here: https://docs.google.com/document/d/1WFKwrKPXZPmuyqU_-RpGDccXeAR7HZgEHqboOeDgr30`);
             }
         });
     } else {
