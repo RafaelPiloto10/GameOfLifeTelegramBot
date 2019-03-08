@@ -48,7 +48,7 @@ Bot.start((chat) => {
 });
 
 Bot.help((chat) => {
-    chat.reply("My current commands are:\n/list - View all of the players\n/register (your username)- Register to begin tracking your progress\n/remove (username)- To remove a player from the game\n/reset (username) - Reset a player's time");
+    chat.reply("My current commands are:\n/list - View all of the players currently registered\n/register (your username)- Register to begin tracking your progress\n/remove (username)- To remove a player from the game\n/reset (username) - Reset a player's time\n/time - View your current time\n/time (username) - View a specific user's time");
 });
 
 Bot.use((chat, next) => {
