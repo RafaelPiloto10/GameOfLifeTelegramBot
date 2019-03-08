@@ -11,11 +11,17 @@ const User = new Schema({
     date: Date
 });
 
-User.index({ name: "text", username: "text", telegram_id: "text" });
+User.index({
+    name: "text",
+    username: "text",
+    telegram_id: "text"
+});
 
 let UserModel = mongoose.model("User", User);
 
-mongoose.connect(`mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASS}@gameoflifedb-bizxs.mongodb.net/test`, { useNewUrlParser: true })
+mongoose.connect(`mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASS}@gameoflifedb-bizxs.mongodb.net/test`, {
+        useNewUrlParser: true
+    })
     .then(console.log("Connected to database"))
     .catch(err => {
         console.log(err);
@@ -76,12 +82,19 @@ Bot.command("register", (chat, next) => {
         let id = chat.from.id;
         let name = chat.from.first_name;
         let username = chat.state.command.args;
-        UserModel.find({ telegram_id: id }, (err, res) => {
+        UserModel.find({
+            telegram_id: id
+        }, (err, res) => {
             console.log(res);
             if (res.length != 0) {
                 chat.reply(`User ${username} has already registered!`);
             } else {
-                let user = new UserModel({ name, username, telegram_id: id, date: new Date() });
+                let user = new UserModel({
+                    name,
+                    username,
+                    telegram_id: id,
+                    date: new Date()
+                });
                 console.log(user);
                 user.save();
                 chat.reply(`Welcome to the Game of Life ${username}!\nPlease view the rules here: https://docs.google.com/document/d/1WFKwrKPXZPmuyqU_-RpGDccXeAR7HZgEHqboOeDgr30`);
@@ -97,9 +110,15 @@ Bot.command("reset", (chat, next) => {
     Tools.verifyAuth(chat).then(isAuth => {
         if (isAuth) {
             if (chat.state.command.args.length != 0) {
-                UserModel.findOne({ username: chat.state.command.args }, (err, res) => {
+                UserModel.findOne({
+                    username: chat.state.command.args
+                }, (err, res) => {
                     if (res) {
-                        UserModel.updateOne({ username: chat.state.command.args }, { date: new Date() }, (err2, res2) => {
+                        UserModel.updateOne({
+                            username: chat.state.command.args
+                        }, {
+                            date: new Date()
+                        }, (err2, res2) => {
                             if (err2 != null) {
                                 console.log(err2);
                                 chat.reply("There was an error in updating the user: " + chat.state.command.args);
@@ -125,11 +144,31 @@ Bot.command("list", (chat, next) => {
         } else {
             let u = "";
             for (let i = 0; i < users.length; i++) {
-                u += users[i].username + " - " + users[i].date + "\n\n";
+                u += users[i].username + ", ";
             }
             chat.reply("There are currently " + users.length + " registered users: \n" + u);
         }
     });
+});
+
+Bot.command("time", (chat, next) => {
+    if (chat.state.command.args.length == 0) {
+        UserModel.findOne({
+            telegram_id: chat.from.id
+        }, (err, user) => {
+            chat.reply("Your current time is: " + user.date);
+        });
+    } else {
+        UserModel.findOne({
+            username: chat.state.command.args
+        }, (err, user) => {
+            if (user) {
+                chat.reply("User " + chat.state.command.args + " has a current time of: " + user.date);
+            } else {
+                chat.reply("Could not find user by the name of: " + chat.state.command.args);
+            }
+        });
+    }
 });
 
 Bot.command("remove", (chat, next) => {
@@ -138,7 +177,9 @@ Bot.command("remove", (chat, next) => {
             chat.reply("Could not remove user! Must provide @ username");
         } else {
             if (isAuth) {
-                UserModel.findOneAndDelete({ username: chat.state.command.args }, (err, res) => {
+                UserModel.findOneAndDelete({
+                    username: chat.state.command.args
+                }, (err, res) => {
                     if (err) chat.reply("There was an error in deleting the user");
                     else {
                         if (res) {
