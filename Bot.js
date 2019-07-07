@@ -56,8 +56,8 @@ Bot.use((chat, next) => {
         const text = chat.update.message.text;
         if (text && text.startsWith('/')) {
             const match = text.match(/^\/([^\s]+)\s?(.+)?/)
-            let args = []
-            let command
+            let args = [];
+            let command;
             if (match !== null) {
                 if (match[1]) {
                     command = match[1]
@@ -81,7 +81,7 @@ Bot.command("register", (chat, next) => {
     if (chat.state.command.args.length != 0) {
         let id = chat.from.id;
         let name = chat.from.first_name;
-        let username = chat.state.command.args;
+        let username = chat.state.command.args.join(" ");
         UserModel.find({
             telegram_id: id
         }, (err, res) => {
