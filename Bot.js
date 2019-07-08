@@ -106,7 +106,7 @@ Bot.on("new_chat_members", async (ctx) => {
 });
 
 Bot.command("register", (chat, next) => {
-    if (chat.state.command.args.length != 0) {
+    if (chat.state.command.args.length == 0) {
         let id = chat.from.id;
         let name = chat.from.first_name;
         let username = chat.from.username;
@@ -129,7 +129,7 @@ Bot.command("register", (chat, next) => {
             }
         });
     } else {
-        chat.reply("Could not register user!");
+
     }
 
 });
@@ -174,7 +174,7 @@ Bot.command("list", (chat, next) => {
             for (let i = 0; i < users.length; i++) {
                 u += users[i].username + ", ";
             }
-            chat.reply("There are currently " + users.length + " registered users: \n" + u);
+            chat.reply("There are currently " + users.length + " registered users: \n" + u.slice(0, -1));
         }
     });
 });
