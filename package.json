@@ -28,7 +28,7 @@
     "dependencies": {
         "express": "^4.16.4",
         "micro-bot": "^2.5.3",
-        "mongoose": "^5.4.16",
+        "mongoose": "^5.7.5",
         "telegraf": "^3.27.1"
     }
 }
